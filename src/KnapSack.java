@@ -3,29 +3,37 @@ import java.util.ArrayList;
 public class KnapSack {
 
     private double maxCapacity;
-    private double currentWeight;
+    private double totalWeight;
+    private double totalProfit;
     private ArrayList<Object> items;
 
-    public KnapSack(double maxCapacity, double currentWeight) {
+    public KnapSack(double maxCapacity) {
         this.maxCapacity = maxCapacity;
-        this.currentWeight = currentWeight;
-        this.items = new ArrayList<Object>();
+        this.totalWeight = 0;
+        this.totalProfit = 0;
+        this.items = new ArrayList<>();
     }
 
     public boolean addItem(Object item){
-        currentWeight += item.getWeight();
-        if(currentWeight > maxCapacity){
+        double newWeight = totalWeight + item.getWeight();
+        if(newWeight > maxCapacity){
             return false;
         }
         items.add(item);
+        totalWeight += item.getWeight();
+        totalProfit += item.getProfit();
         return true;
     }
 
-    public double getMaxCapacity() {
-        return maxCapacity;
+    public double getTotalWeight() {
+        return totalWeight;
     }
 
-    public double getCurrentWeight() {
-        return currentWeight;
+    public double getTotalProfit() {
+        return totalProfit;
+    }
+
+    public ArrayList<Object> getItems() {
+        return items;
     }
 }

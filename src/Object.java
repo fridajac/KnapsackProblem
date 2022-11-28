@@ -7,6 +7,7 @@ public class Object {
     public Object(double weight, double profit) {
         this.weight = weight;
         this.profit = profit;
+        this.profitByWeight = profit/weight;
     }
 
     public double getWeight() {
@@ -18,10 +19,6 @@ public class Object {
     }
 
     public double getProfitByWeight() {
-        return profit/weight;
-    }
-
-    public void setProfitByWeight(int profitByWeight) {
-        this.profitByWeight = profitByWeight;
+        return profitByWeight;
     }
 }
