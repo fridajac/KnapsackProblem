@@ -1,33 +1,24 @@
 public class Object {
 
-    private int weight;
-    private int profit;
-    private int profitByWeight;
+    private double weight;
+    private double profit;
+    private double profitByWeight;
 
-    public Object(int weight, int profit, int profitByWeight) {
+    public Object(double weight, double profit) {
         this.weight = weight;
         this.profit = profit;
-        this.profitByWeight = profitByWeight;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
-    public int getProfit() {
+    public double getProfit() {
         return profit;
     }
 
-    public void setProfit(int profit) {
-        this.profit = profit;
-    }
-
-    public int getProfitByWeight() {
-        return profitByWeight;
+    public double getProfitByWeight() {
+        return profit/weight;
     }
 
     public void setProfitByWeight(int profitByWeight) {
