@@ -13,7 +13,7 @@ public class Greedy {
         Lib.printEvaluatedSolution(solution);
     }
     static Solution runGreedyAlgorithm() {
-        LinkedList<Knapsack> allKnapsacks = TestData.getKnapsacks(3);
+        LinkedList<Knapsack> allKnapsacks = TestData.getKnapsacks(7);
         LinkedList<Item> items = TestData.getItems();
         return greedyAlgorithm(allKnapsacks, items);
     }

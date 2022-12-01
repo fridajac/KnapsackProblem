@@ -27,47 +27,52 @@ public class NeighbourhoodSearch {
 
         LinkedList<Knapsack> knapsacks = currentSolution.getKnapsacks();
         List<Item> itemsLeft = currentSolution.getItemsNotIncluded();
+        Solution localOptima = currentSolution;
+        boolean localOptimaFound = false;
 
-        //1. Rearranging part
-        for (int i = 0; i < knapsacks.size(); i++) {
-            Knapsack knapsack = knapsacks.get(i);
-            int weightLeft = knapsack.getWeightLeft();
+        while(!localOptimaFound) {
 
-            //TODO only look through other knapsacks.
+            //1. Rearranging part
+            for (int i = 0; i < knapsacks.size(); i++) {
+                Knapsack knapsack = knapsacks.get(i);
+                if (knapsack.gotCapacityLeft()) {
+                    int weightLeft = knapsack.getWeightLeft();
 
-            for (int j = 0; j < knapsacks.size(); j++) {
-                Knapsack otherKnapsack = knapsacks.get(j);
-                if (otherKnapsack.gotCapacityLeft()) {
-                    Item item = otherKnapsack.getItemWithSpecificWeight(weightLeft);
-                    if (item != null) {
-                        otherKnapsack.removeItem(item);
-                        knapsack.addItem(item);
+                    //TODO only look through other knapsacks.
+
+                    for (int j = 0; j < knapsacks.size(); j++) {
+                        if (knapsacks.get(j).gotCapacityLeft()) {
+                            Item item = knapsacks.get(j).getItemWithSpecificWeight(weightLeft);
+                            if (item != null) {
+                                knapsacks.get(j).removeItem(item);
+                                knapsack.addItem(item);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            //2. fill with more items part
+            for (int i = 0; i < itemsLeft.size(); i++) {
+                for (int j = 0; j < knapsacks.size(); j++) {
+                    Knapsack knapsack = knapsacks.get(j);
+                    Item item = itemsLeft.get(i);
+                    boolean doItemFit = knapsack.addItem(item);
+                    if (doItemFit) {
+                        itemsLeft.remove(item);
                         break;
                     }
                 }
             }
-        }
-
-        //2. fill with more items part
-        for (int i = 0; i < itemsLeft.size(); i++) {
-            for (int j = 0; j < knapsacks.size(); j++) {
-                Knapsack knapsack = knapsacks.get(j);
-                Item item = itemsLeft.get(i);
-                boolean doItemFit = knapsack.addItem(item);
-                if (doItemFit) {
-                    itemsLeft.remove(item);
-                    break;
-                }
+            //3. evaluate solution
+            Solution neighbour = new Solution(knapsacks, itemsLeft);
+            double profitNeighbour = Lib.evaluateSolution(neighbour);
+            if (profitNeighbour > profitCurrentSolution) {
+                localOptima = neighbour;
+                localOptimaFound = true;
             }
         }
-        //3. evaluate solution
-        Solution newSolution = new Solution(knapsacks, itemsLeft);
-        double newProfit = Lib.evaluateSolution(newSolution);
-        if (newProfit > profitCurrentSolution) {
-            return newSolution;
-        } else {
-            //continue looking through more neighbors. Where are these neighbours?
-        }
-        return newSolution;
+        return localOptima;
     }
 }
