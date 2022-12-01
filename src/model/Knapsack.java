@@ -51,6 +51,12 @@ public class Knapsack {
         return id;
     }
 
+    public boolean gotCapacityLeft() {
+        if(weight < 15){
+            return true;
+        }
+        return false;
+    }
     public int getWeightLeft() {
         return maxCapacity-weight;
     }
