@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Knapsack {
 
     private int id;
-    private double maxCapacity;
-    private double weight;
-    private double profit;
+    private int maxCapacity;
+    private int weight;
+    private int profit;
     private ArrayList<Item> items;
 
-    public Knapsack(int id, double maxCapacity) {
+    public Knapsack(int id, int maxCapacity) {
         this.id = id;
         this.maxCapacity = maxCapacity;
         this.weight = 0;
@@ -29,6 +29,12 @@ public class Knapsack {
         return true;
     }
 
+    public void removeItem(Item item){
+        items.remove(item);
+        weight -= item.getWeight();
+        profit -= item.getProfit();
+    }
+
     public double getWeight() {
         return weight;
     }
@@ -45,4 +51,16 @@ public class Knapsack {
         return id;
     }
 
+    public int getWeightLeft() {
+        return maxCapacity-weight;
+    }
+
+    public Item getItemWithSpecificWeight(int weightLeft) {
+        for(Item item : items){
+            if(item.getWeight() == weightLeft){
+                return item;
+            }
+        }
+        return null;
+    }
 }

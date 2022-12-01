@@ -2,11 +2,11 @@ package model;
 
 public class Item {
 
-    private double weight;
-    private double profit;
+    private int weight;
+    private int profit;
     private double profitByWeight;
 
-    public Item(double weight, double profit) {
+    public Item(int weight, int profit) {
         this.weight = weight;
         this.profit = profit;
         this.profitByWeight = profit/weight;

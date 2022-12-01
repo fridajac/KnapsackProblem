@@ -9,10 +9,11 @@ public class Greedy {
 
     public static void main(String[] args) {
         Solution solution = runGreedyAlgorithm();
-        Lib.evaluateSolution(solution);
+        //System.out.println("Total profit of this solution: " +Lib.evaluateSolution(solution));
+        Lib.printEvaluatedSolution(solution);
     }
     static Solution runGreedyAlgorithm() {
-        LinkedList<Knapsack> allKnapsacks = TestData.getKnapsacks(1);
+        LinkedList<Knapsack> allKnapsacks = TestData.getKnapsacks(3);
         LinkedList<Item> items = TestData.getItems();
         return greedyAlgorithm(allKnapsacks, items);
     }
