@@ -1,7 +1,4 @@
-import model.Item;
-import model.Knapsack;
-import model.Lib;
-import model.TestData;
+import model.*;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -11,10 +8,10 @@ import java.util.stream.Collectors;
 public class Greedy {
 
     public static void main(String[] args) {
-        LinkedList<Knapsack> solution = runGreedyAlgorithm();
+        Solution solution = runGreedyAlgorithm();
         Lib.evaluateSolution(solution);
     }
-    static LinkedList<Knapsack> runGreedyAlgorithm() {
+    static Solution runGreedyAlgorithm() {
         LinkedList<Knapsack> allKnapsacks = TestData.getKnapsacks(1);
         LinkedList<Item> items = TestData.getItems();
         return greedyAlgorithm(allKnapsacks, items);
@@ -24,7 +21,7 @@ public class Greedy {
      * 1. Arrange the items in descending order based on profitByWeight.
      * 2. Add the items one by one into the first knapsack that has room
      */
-    private static LinkedList<Knapsack> greedyAlgorithm(LinkedList<Knapsack> allKnapsacks, LinkedList<Item> items){
+    private static Solution greedyAlgorithm(LinkedList<Knapsack> allKnapsacks, LinkedList<Item> items){
         List<Item> sortedItems = items.stream()
                 .sorted(Comparator.comparing(Item::getProfitByWeight).reversed())
                 .collect(Collectors.toList());
@@ -40,6 +37,6 @@ public class Greedy {
                     }
                 }
             }
-        return allKnapsacks;
+        return new Solution(allKnapsacks, sortedItems);
     }
 }

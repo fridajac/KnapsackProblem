@@ -1,11 +1,9 @@
 package model;
 
-import java.util.LinkedList;
-
 public class Lib {
 
-    public static void  evaluateSolution(LinkedList<Knapsack> solution){
-        for(Knapsack knapsack : solution) {
+    public static void  evaluateSolution(Solution solution){
+        for(Knapsack knapsack : solution.getKnapsacks()) {
             System.out.println("Knapsack " +knapsack.getId());
             System.out.println("Full at: " +knapsack.getWeight());
             System.out.println("Total profit: " +knapsack.getProfit());
