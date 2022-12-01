@@ -1,7 +1,5 @@
 
 import model.Knapsack;
-import model.Item;
-import model.TestData;
 
 import java.util.LinkedList;
 
