@@ -1,3 +1,5 @@
+package model;
+
 import java.util.ArrayList;
 
 public class Knapsack {
@@ -6,7 +8,7 @@ public class Knapsack {
     private double maxCapacity;
     private double weight;
     private double profit;
-    private ArrayList<Object> items;
+    private ArrayList<Item> items;
 
     public Knapsack(int id, double maxCapacity) {
         this.id = id;
@@ -16,7 +18,7 @@ public class Knapsack {
         this.items = new ArrayList<>();
     }
 
-    public boolean addItem(Object item){
+    public boolean addItem(Item item){
         double newWeight = weight + item.getWeight();
         if(newWeight > maxCapacity){
             return false;
@@ -26,21 +28,6 @@ public class Knapsack {
         profit += item.getProfit();
         return true;
     }
-
-    public boolean addItemUsingFractions(Object item){
-        double newWeight = weight + item.getWeight();
-        if(newWeight > maxCapacity){
-            double diff = maxCapacity - newWeight;
-            System.out.println(diff);
-            //find fraction
-            return false;
-        }
-        items.add(item);
-        weight += item.getWeight();
-        profit += item.getProfit();
-        return true;
-    }
-
 
     public double getWeight() {
         return weight;
@@ -50,19 +37,12 @@ public class Knapsack {
         return profit;
     }
 
-    public ArrayList<Object> getItems() {
+    public ArrayList<Item> getItems() {
         return items;
-    }
-
-    public boolean gotCapacity() {
-        return weight != maxCapacity;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }

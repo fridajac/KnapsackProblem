@@ -1,10 +1,12 @@
-public class Object {
+package model;
+
+public class Item {
 
     private double weight;
     private double profit;
     private double profitByWeight;
 
-    public Object(double weight, double profit) {
+    public Item(double weight, double profit) {
         this.weight = weight;
         this.profit = profit;
         this.profitByWeight = profit/weight;
