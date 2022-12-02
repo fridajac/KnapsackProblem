@@ -38,8 +38,6 @@ public class NeighbourhoodSearch {
                 if (knapsack.gotCapacityLeft()) {
                     int weightLeft = knapsack.getWeightLeft();
 
-                    //TODO only look through other knapsacks.
-
                     for (int j = 0; j < knapsacks.size(); j++) {
                         if (knapsacks.get(j).gotCapacityLeft()) {
                             Item item = knapsacks.get(j).getItemWithSpecificWeight(weightLeft);
@@ -53,7 +51,7 @@ public class NeighbourhoodSearch {
                 }
             }
 
-            //2. fill with more items part
+            //2. Fill new spaces with more items
             for (int i = 0; i < itemsLeft.size(); i++) {
                 for (int j = 0; j < knapsacks.size(); j++) {
                     Knapsack knapsack = knapsacks.get(j);
@@ -65,6 +63,7 @@ public class NeighbourhoodSearch {
                     }
                 }
             }
+
             //3. evaluate solution
             Solution neighbour = new Solution(knapsacks, itemsLeft);
             double profitNeighbour = Lib.evaluateSolution(neighbour);

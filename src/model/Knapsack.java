@@ -18,9 +18,9 @@ public class Knapsack {
         this.items = new ArrayList<>();
     }
 
-    public boolean addItem(Item item){
+    public boolean addItem(Item item) {
         double newWeight = weight + item.getWeight();
-        if(newWeight > maxCapacity){
+        if (newWeight > maxCapacity) {
             return false;
         }
         items.add(item);
@@ -29,7 +29,7 @@ public class Knapsack {
         return true;
     }
 
-    public void removeItem(Item item){
+    public void removeItem(Item item) {
         items.remove(item);
         weight -= item.getWeight();
         profit -= item.getProfit();
@@ -52,18 +52,21 @@ public class Knapsack {
     }
 
     public boolean gotCapacityLeft() {
-        if(weight < 15){
+        if (weight < 15) {
             return true;
         }
         return false;
     }
+
     public int getWeightLeft() {
-        return maxCapacity-weight;
+        return maxCapacity - weight;
     }
 
     public Item getItemWithSpecificWeight(int weightLeft) {
-        for(Item item : items){
-            if(item.getWeight() == weightLeft){
+        double fitDefinition = 0.5;
+
+        for (Item item : items) {
+            if ((item.getWeight() > weightLeft - fitDefinition) && (item.getWeight() <= item.getWeight() + fitDefinition)) {
                 return item;
             }
         }
