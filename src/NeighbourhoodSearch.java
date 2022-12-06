@@ -24,30 +24,46 @@ public class NeighbourhoodSearch {
 
         LinkedList<Knapsack> knapsacks = currentSolution.getKnapsacks();
         List<Item> itemsLeft = currentSolution.getItemsNotIncluded();
-
-        boolean localOptimaFound = false;
+        Solution localOptima = currentSolution;
 
         //1. define neighbourhood as margin 0.1-1
         ArrayList<Double> neighbourhoodMargins = new ArrayList<>();
-        for(double i = 0.1; i < 1; i++){
-            neighbourhoodMargins.add(i);
-        }
+        neighbourhoodMargins.add(0.1);
+        neighbourhoodMargins.add(0.2);
+        neighbourhoodMargins.add(0.3);
+        neighbourhoodMargins.add(0.4);
+        neighbourhoodMargins.add(0.5);
+        neighbourhoodMargins.add(0.6);
+        neighbourhoodMargins.add(0.7);
+        neighbourhoodMargins.add(0.8);
+        neighbourhoodMargins.add(0.9);
+        neighbourhoodMargins.add(1.0);
 
-        Solution bestSolution = currentSolution;
-        double bestProfit = Lib.evaluateSolution(bestSolution);
+        double bestProfit = Lib.evaluateSolution(localOptima);
+        Solution bestNeighbourHood = currentSolution;
+        HashMap<Solution, Double> neighbourhoodValues = new HashMap<>();
 
         for (double neighbourMargin : neighbourhoodMargins) {
             //3. evaluate this neighbor
             Solution neighbour = rearrangeHolesByMargin(knapsacks, itemsLeft, neighbourMargin);
             double profitNeighbour = Lib.evaluateSolution(neighbour);
-            if (profitNeighbour > bestProfit) {
-                bestProfit = profitNeighbour;
-                bestSolution = neighbour;
+            neighbourhoodValues.put(neighbour, profitNeighbour);
+        }
+
+        //4. Find solution with best profit
+        double bestNeighbourValue = Double.MIN_VALUE;
+
+        for (Map.Entry<Solution, Double> entry : neighbourhoodValues.entrySet()) {
+            if (entry.getValue() > bestNeighbourValue) {
+                bestNeighbourValue = entry.getValue();
+                bestNeighbourHood = entry.getKey();
             }
         }
-        //4. return best neighbour as local optima
-        System.out.println(bestProfit);
-        return bestSolution;
+        //5. return best neighbour as local optima
+        if(bestNeighbourValue > bestProfit){
+            localOptima = bestNeighbourHood;
+        }
+        return localOptima;
     }
 
     private static Solution rearrangeHolesByMargin(LinkedList<Knapsack> knapsacks, List<Item> itemsLeft, double margin) {
@@ -82,6 +98,7 @@ public class NeighbourhoodSearch {
                 }
             }
         }
+        System.out.println(itemsLeft.size());
         return new Solution(knapsacks, itemsLeft);
     }
 }
