@@ -10,15 +10,13 @@ public class NeighbourhoodSearch {
 
     public static void main(String[] args) {
         Solution greedySolution = Greedy.runGreedyAlgorithm();
-
         Solution newSolution = neighbourhoodSearch(greedySolution);
-        // System.out.println("Total profit of this solution: " + Lib.evaluateSolution(newSolution));
         Lib.printEvaluatedSolution(newSolution);
-
     }
 
     /**
-     * Describe here...
+     * Take a feasible solution (greedy) and optimize it
+     * The best solution find is our local optima
      *
      * @param currentSolution
      */
@@ -27,7 +25,9 @@ public class NeighbourhoodSearch {
 
         LinkedList<Knapsack> knapsacks = currentSolution.getKnapsacks();
         List<Item> itemsLeft = currentSolution.getItemsNotIncluded();
+
         Solution localOptima = currentSolution;
+
         boolean localOptimaFound = false;
 
         while(!localOptimaFound) {
@@ -35,11 +35,11 @@ public class NeighbourhoodSearch {
             //1. Rearranging part
             for (int i = 0; i < knapsacks.size(); i++) {
                 Knapsack knapsack = knapsacks.get(i);
-                if (knapsack.gotCapacityLeft()) {
-                    int weightLeft = knapsack.getWeightLeft();
+                if (knapsack.hasCapacityLeft()) {
+                    double weightLeft = knapsack.getWeightLeft();
 
                     for (int j = 0; j < knapsacks.size(); j++) {
-                        if (knapsacks.get(j).gotCapacityLeft()) {
+                        if (knapsacks.get(j).hasCapacityLeft()) {
                             Item item = knapsacks.get(j).getItemWithSpecificWeight(weightLeft);
                             if (item != null) {
                                 knapsacks.get(j).removeItem(item);
