@@ -38,7 +38,7 @@ public class NeighbourhoodSearch {
 
         for (double neighbourMargin : neighbourhoodMargins) {
             //3. evaluate this neighbor
-            Solution neighbour = rearrangeInHoles(knapsacks, itemsLeft, neighbourMargin);
+            Solution neighbour = rearrangeHolesByMargin(knapsacks, itemsLeft, neighbourMargin);
             double profitNeighbour = Lib.evaluateSolution(neighbour);
             if (profitNeighbour > bestProfit) {
                 bestProfit = profitNeighbour;
@@ -50,7 +50,7 @@ public class NeighbourhoodSearch {
         return bestSolution;
     }
 
-    private static Solution rearrangeInHoles(LinkedList<Knapsack> knapsacks, List<Item> itemsLeft, double margin) {
+    private static Solution rearrangeHolesByMargin(LinkedList<Knapsack> knapsacks, List<Item> itemsLeft, double margin) {
         //1. Rearrange items between knapsacks
         for (int i = 0; i < knapsacks.size(); i++) {
             Knapsack knapsack = knapsacks.get(i);
