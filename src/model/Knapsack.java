@@ -62,8 +62,7 @@ public class Knapsack {
         return maxCapacity - weight;
     }
 
-    public Item getItemWithSpecificWeight(double weightLeft) {
-        double margin = 0.2;
+    public Item getItemWithSpecificWeight(double weightLeft, double margin) {
 
         for (Item item : items) {
             if ((item.getWeight() > (weightLeft - margin)) && (item.getWeight() <= (item.getWeight() + margin))) {
