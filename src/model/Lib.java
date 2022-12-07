@@ -14,9 +14,7 @@ public class Lib {
             System.out.println("Full at: " +knapsack.getWeight());
             System.out.println("Total profit: " +knapsack.getProfit());
             System.out.println("Nbr of items: " +knapsack.getItems().size());
-            for(Item item : knapsack.getItems()){
-                System.out.println("Profit by weight: " +item.getProfitByWeight());
-            }
+            System.out.println("    ");
         }
         System.out.println("  ");
         System.out.println("Total evaluation:");
