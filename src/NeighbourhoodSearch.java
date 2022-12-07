@@ -9,7 +9,7 @@ public class NeighbourhoodSearch {
 
     public static void main(String[] args) {
         Solution greedySolution = Greedy.runGreedyAlgorithm();
-        Solution newSolution = neighbourhoodSearch(greedySolution);
+        Solution newSolution = neighbourhoodSearch(greedySolution, 1);
         Lib.printEvaluatedSolution(newSolution);
     }
 
@@ -20,48 +20,55 @@ public class NeighbourhoodSearch {
      *
      * @param currentSolution
      */
-    private static Solution neighbourhoodSearch(Solution currentSolution) {
+    private static Solution neighbourhoodSearch(Solution currentSolution, int thisIteration) {
+
+        int maxIteration = 3;
 
         LinkedList<Knapsack> knapsacks = currentSolution.getKnapsacks();
         List<Item> itemsLeft = currentSolution.getItemsNotIncluded();
         Solution localOptima = currentSolution;
 
-        //1. define neighbourhood as margin 0.1-1
-        ArrayList<Double> neighbourhoodMargins = new ArrayList<>();
-        neighbourhoodMargins.add(0.1);
-        neighbourhoodMargins.add(0.2);
-        neighbourhoodMargins.add(0.3);
-        neighbourhoodMargins.add(0.4);
-        neighbourhoodMargins.add(0.5);
-        neighbourhoodMargins.add(0.6);
-        neighbourhoodMargins.add(0.7);
-        neighbourhoodMargins.add(0.8);
-        neighbourhoodMargins.add(0.9);
-        neighbourhoodMargins.add(1.0);
+        while(thisIteration <= maxIteration) {
 
-        double bestProfit = Lib.evaluateSolution(localOptima);
-        Solution bestNeighbourHood = currentSolution;
-        HashMap<Solution, Double> neighbourhoodValues = new HashMap<>();
+            //1. define neighbourhood as margin 0.1-1
+            ArrayList<Double> neighbourhoodMargins = new ArrayList<>();
+            neighbourhoodMargins.add(0.1);
+          /*  neighbourhoodMargins.add(0.2);
+            neighbourhoodMargins.add(0.3);
+            neighbourhoodMargins.add(0.4);
+            neighbourhoodMargins.add(0.5);
+            neighbourhoodMargins.add(0.6);
+            neighbourhoodMargins.add(0.7);
+            neighbourhoodMargins.add(0.8);
+            neighbourhoodMargins.add(0.9);
+            neighbourhoodMargins.add(1.0);*/
 
-        for (double neighbourMargin : neighbourhoodMargins) {
-            //3. evaluate this neighbor
-            Solution neighbour = rearrangeHolesByMargin(knapsacks, itemsLeft, neighbourMargin);
-            double profitNeighbour = Lib.evaluateSolution(neighbour);
-            neighbourhoodValues.put(neighbour, profitNeighbour);
-        }
+            double bestProfit = Lib.evaluateSolution(localOptima);
+            Solution bestNeighbourHood = currentSolution;
+            HashMap<Solution, Double> neighbourhoodValues = new HashMap<>();
 
-        //4. Find solution with best profit
-        double bestNeighbourValue = Double.MIN_VALUE;
-
-        for (Map.Entry<Solution, Double> entry : neighbourhoodValues.entrySet()) {
-            if (entry.getValue() > bestNeighbourValue) {
-                bestNeighbourValue = entry.getValue();
-                bestNeighbourHood = entry.getKey();
+            for (double neighbourMargin : neighbourhoodMargins) {
+                //3. evaluate this neighbor
+                Solution neighbour = rearrangeHolesByMargin(knapsacks, itemsLeft, neighbourMargin);
+                double profitNeighbour = Lib.evaluateSolution(neighbour);
+                neighbourhoodValues.put(neighbour, profitNeighbour);
             }
-        }
-        //5. return best neighbour as local optima
-        if(bestNeighbourValue > bestProfit){
-            localOptima = bestNeighbourHood;
+
+            //4. Find solution with best profit
+            double bestNeighbourValue = Double.MIN_VALUE;
+
+            for (Map.Entry<Solution, Double> entry : neighbourhoodValues.entrySet()) {
+                if (entry.getValue() > bestNeighbourValue) {
+                    bestNeighbourValue = entry.getValue();
+                    bestNeighbourHood = entry.getKey();
+                }
+            }
+            //5. return best neighbour as local optima
+            if (bestNeighbourValue > bestProfit) {
+                localOptima = bestNeighbourHood;
+            }
+            neighbourhoodSearch(localOptima, thisIteration+1);
+            break;
         }
         return localOptima;
     }
@@ -98,7 +105,6 @@ public class NeighbourhoodSearch {
                 }
             }
         }
-        System.out.println(itemsLeft.size());
         return new Solution(knapsacks, itemsLeft);
     }
 }
