@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Solution {
-
+    private String solutionName;
     private LinkedList<Knapsack> knapsacks;
     private List<Item> itemsNotIncluded;
 
@@ -27,5 +27,13 @@ public class Solution {
 
     public void setItemsNotIncluded(List<Item> itemsNotIncluded) {
         this.itemsNotIncluded = itemsNotIncluded;
+    }
+
+    public String getSolutionName() {
+        return solutionName;
+    }
+
+    public void setSolutionName(String solutionName) {
+        this.solutionName = solutionName;
     }
 }
