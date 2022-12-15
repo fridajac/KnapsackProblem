@@ -12,11 +12,13 @@ public class NeighbourhoodSearch {
     public NeighbourhoodSearch() {
         neighbourhoodValues = new HashMap<>();
         Solution greedySolution = Greedy.runGreedyAlgorithm();
-        greedySolution.setSolutionName("greedy");
         neighbourhoodSearch(greedySolution, 0);
         evaluateFinalSolutions();
     }
 
+    /**
+     * Evaluate the solutions contained in the hashmap and continue with the best one.
+     */
     private void evaluateFinalSolutions() {
         double bestSolution=0.0;
         String nameOfBestSolution="";
@@ -29,11 +31,11 @@ public class NeighbourhoodSearch {
         System.out.println("Best solution found with value: " + bestSolution + " Moving forward with " + nameOfBestSolution);
         System.out.println();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Do you want to see the full array of solutions? Then press 1 \n press 2 to exit");
+        System.out.println("Do you want to see the full array of solutions? Then press 1 \npress 2 to exit");
         String menu = scanner.nextLine();
         if (Integer.parseInt(menu)==1){
             for (Map.Entry<Solution, Double> entry : neighbourhoodValues.entrySet()) {
-                System.out.print(entry.getValue() + "   ");
+                System.out.print("Value: " +entry.getValue() + "   ");
                 System.out.println(entry.getKey().getSolutionName());
             }
         }
@@ -94,8 +96,7 @@ public class NeighbourhoodSearch {
         if (bestNeighbourValue > bestProfit) {
             bestProfit = bestNeighbourValue;
             localOptima = bestNeighbourHood;
-            //System.out.println("Local optima now has value " +bestProfit);
-           // neighbourhoodSearch(localOptima, bestProfit);
+            neighbourhoodSearch(localOptima, bestProfit);
         }
         System.out.println("Did not find better local profit in neighbourhood, breaking");
         return localOptima;
